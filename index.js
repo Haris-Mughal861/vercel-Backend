@@ -4,6 +4,8 @@ const cors = require('cors')
 const cookieParser = require('cookie-parser')
 const getConnection = require('./utils/getConnection');
 const errorHandler = require('./middlewares/errorHandler');
+const galaryRoutes = require('./routes/galary')
+const path = require('path')
 
 
 const accountRoutes = require('./routes/account')
@@ -19,8 +21,10 @@ app.use(cors())
 app.use(express.json())
 app.use(cookieParser())
 app.use(express.urlencoded({ extended:false}))
+app.use('/images',express.static(path.join(__dirname,'images')))
 
 app.use('/user',accountRoutes)
+app.use('image',galaryRoutes)
 
 
 
