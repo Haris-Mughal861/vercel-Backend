@@ -7,7 +7,7 @@ const fileUpload = () => {
         },
         filename: (req, file, cb) => {
             const num = Math.floor(Math.random() * 1e9); 
-            cb(null, num + '-' + file.originalname); 
+            cb(null, file.fieldname + file.originalname); 
         },
     });
 
