@@ -4,12 +4,14 @@ const cors = require('cors')
 const cookieParser = require('cookie-parser')
 const getConnection = require('./utils/getConnection');
 const errorHandler = require('./middlewares/errorHandler');
-const galaryRoutes = require('./routes/galary')
-const path = require('path')
-const brandRoutes = require("./routes/brands")
+const galaryRoutes = require('./routes/galary');
+const categoryRoutes = require('./routes/Category');
+const productRoutes = require('./routes/products');
+const path = require('path');
+const brandRoutes = require("./routes/brands");
 
 
-const accountRoutes = require('./routes/account')
+const accountRoutes = require('./routes/account');
 
 
 
@@ -27,6 +29,8 @@ app.use('/images',express.static(path.join(__dirname,'images')))
 app.use('/user',accountRoutes);
 app.use('image',galaryRoutes);
 app.use('/brand',brandRoutes);
+app.use('/category',categoryRoutes);
+app.use('/product',productRoutes);
 
 
 
