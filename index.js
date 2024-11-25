@@ -1,4 +1,4 @@
-require('dotenv').config()
+require('dotenv').config();
 const express = require('express')
 const cors = require('cors')
 const cookieParser = require('cookie-parser')
@@ -27,7 +27,7 @@ app.use(express.urlencoded({ extended:false}))
 app.use('/images',express.static(path.join(__dirname,'images')))
 
 app.use('/user',accountRoutes);
-app.use('image',galaryRoutes);
+app.use('/image',galaryRoutes);
 app.use('/brand',brandRoutes);
 app.use('/category',categoryRoutes);
 app.use('/product',productRoutes);
@@ -41,10 +41,15 @@ app.use('/product',productRoutes);
 
 
 app.use(errorHandler);
-getConnection()
-app.listen(process.env.PORT, ()=>
-    console.log('server is listening on port: ${process.env.PORT}' )
-    );
+getConnection();
+app.listen(process.env.PORT, () => {
+    console.log(`Server is listening to port: ${process.env.PORT}`);
+});
+
+  
+  
+
+
 
     
 
