@@ -4,6 +4,8 @@ const Product = require('../../models/product')
 
 
 const getProducts = async(req,res,next)=>{
+    const pageNum = req.query.page
+    const pageLimit = 2
 
  try{
 
@@ -22,7 +24,9 @@ const getProducts = async(req,res,next)=>{
 
 
 
-    ]);
+    ]).skip((pageNum-1)*pageLimit)
+    .limit(pageLimit)
+    .sort({_id: -1});
 
 
     res.status(200).json({message:'success',status:true,list})
