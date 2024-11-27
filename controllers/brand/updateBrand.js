@@ -11,7 +11,12 @@ const updateBrand = async (req,res,next)=>{
             error.statusCode = 400;
             throw error;
 }
-findedBrand.title = title;
+
+const isExist = await Brand.findOne({title:title})
+
+
+
+findedBrand.title = isExist.title === title ? findedBrand.title:title;
 findedBrand.image = image;
 await findedBrand.save();
 res.status(200).json({message:'brand updated successfully',status: true,
