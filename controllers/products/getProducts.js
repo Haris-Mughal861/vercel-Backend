@@ -21,6 +21,14 @@ const getProducts = async(req,res,next)=>{
             select:'-products -__v'
 
         },
+        {
+            path:'review',
+            select:'-product',
+            populate:{
+                path:'user',
+                select:'name',
+                }
+        }
 
 
 

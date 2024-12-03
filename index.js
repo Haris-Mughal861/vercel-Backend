@@ -9,6 +9,9 @@ const categoryRoutes = require('./routes/Category');
 const productRoutes = require('./routes/products');
 const path = require('path');
 const brandRoutes = require("./routes/brands");
+const dropdownRoutes = require('./routes/dropdown')
+const reviewsRouter = require('./routes/reviews')
+const cartRoutes = require('./routes/cart')
 
 
 const accountRoutes = require('./routes/account');
@@ -31,6 +34,10 @@ app.use('/image',galaryRoutes);
 app.use('/brand',brandRoutes);
 app.use('/category',categoryRoutes);
 app.use('/product',productRoutes);
+app.use('/dropdown',dropdownRoutes);
+app.use('/reviews',reviewsRouter);
+app.use('/cart',cartRoutes);
+
 
 
 

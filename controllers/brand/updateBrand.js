@@ -16,7 +16,7 @@ const isExist = await Brand.findOne({title:title})
 
 
 
-findedBrand.title = isExist.title === title ? findedBrand.title:title;
+findedBrand.title = isExist ? isExist.title === title ? findedBrand.title:title:title;
 findedBrand.image = image;
 await findedBrand.save();
 res.status(200).json({message:'brand updated successfully',status: true,

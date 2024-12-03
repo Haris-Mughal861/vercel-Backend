@@ -15,7 +15,7 @@ const updateCategory = async (req,res,next)=>{
 
 
 
-            findedCat.title = isExist.title === title ? findedCat.title:title
+            findedCat.title = isExist ? isExist.title === title ? findedCat.title:title:title
             findedCat.image = image
             await findedCat.save()
             res.json({message:'Category updated successfully'})
@@ -27,3 +27,5 @@ const updateCategory = async (req,res,next)=>{
 
     }
 }
+
+module.exports = updateCategory;
