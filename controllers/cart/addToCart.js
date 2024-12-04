@@ -9,7 +9,7 @@ const userId = req.userId
         const findedProduct = await Product.findById(productId)
         if(findedCart){
             findedCart.quantity ++
-            findedCart.cartTotal+=findedCart.product.sale_price
+            findedCart.cartTotal+=findedCart.sale_price;
             await findedCart.save();
         }else{
             const newCart = new Cart({
