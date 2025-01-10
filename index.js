@@ -12,6 +12,7 @@ const brandRoutes = require("./routes/brands");
 const dropdownRoutes = require('./routes/dropdown')
 const reviewsRouter = require('./routes/reviews')
 const cartRoutes = require('./routes/cart')
+const orderRoutes = require('./routes/order')
 
 
 const accountRoutes = require('./routes/account');
@@ -37,6 +38,7 @@ app.use('/product',productRoutes);
 app.use('/dropdown',dropdownRoutes);
 app.use('/reviews',reviewsRouter);
 app.use('/cart',cartRoutes);
+app.use('/order',orderRoutes);
 
 
 

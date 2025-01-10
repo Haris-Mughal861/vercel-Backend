@@ -13,8 +13,10 @@ const userSchema = new mongoose.Schema({
     role: {
         type: String,
         default: 'User'  
-    }
-}, { timestamps: true });
+    },
+    order:[{type:mongoose.Types.ObjectId,ref:"Order"}],
+}, 
+{ timestamps: true });
 
 module.exports = mongoose.model('User', userSchema);
 
