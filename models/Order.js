@@ -4,7 +4,8 @@ const orderSchema = new mongoose.Schema({
     product:[{type:Object}],
     user: [{type:mongoose.Types.ObjectId,ref:'User'}],
     orderTotal:{type:Number},
-    status:{type:String,default:'processing'}
+    status:{type:String,default:'processing'},
+    address:{type:Object},
 },
 {
     timestamps:true

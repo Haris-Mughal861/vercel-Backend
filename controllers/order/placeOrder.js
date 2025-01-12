@@ -4,7 +4,7 @@ const stripePayment = require('../../utils/stripePayment');
 const User = require ('../../models/User')
 
 const placeOrder = async (req, res, next) => {
-    const { number, cvc, exp_month, exp_year } = req.body;
+    const { number, cvc, exp_month, exp_year, address} = req.body;
     const userId = req.userId;
     try {
         const findedCart = await Cart.find({ user: userId }).populate([
@@ -38,6 +38,7 @@ const newOrder = new Order({
     }),
     user: userId,
     orderTotal: orderTotal,
+    address: address,
 
 
 
