@@ -9,9 +9,9 @@ const {name,email,password} = req.body
 try{
 
     if(validationError){
-        const error = new error(validationError.details[0].message)
-        error.statusCode = 400;
-        throw error;
+        const err = new Error(validationError.details[0].message)
+        err.statusCode = 400;
+        throw err;
     }
 
 const formatedName = name.toLowerCase()
@@ -35,7 +35,7 @@ const newUser= new User({
 })
 
 await newUser.save();
-res.status(200).json({message:'User Rigistered Successfully',satus:true})
+res.status(200).json({message:'User Rigistered Successfully',status:true})
 
 
 

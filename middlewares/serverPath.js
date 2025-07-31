@@ -1,13 +1,14 @@
-const serverPath = (req,res,next)=>{
+const serverPath = (req, res, next) => {
+    const protocol = req.protocol;
+    const hostName = req.get("host");
 
-const protocol = req.protocol
-const hostName = req.get("host");
+    
+    const domain = `${protocol}://${hostName}/`;  
+    req.domain = domain;
 
-const domain = '${protocol}://${hostname}/';
-req.domain = domain;
+    console.log(domain); 
 
-console.log(protocol);
-next();
+    next(); 
 };
 
-module.exports = serverPath
+module.exports = serverPath;

@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');  // Keep only this line
+const mongoose = require('mongoose');  
 
 const getConnection = () => {
     try {

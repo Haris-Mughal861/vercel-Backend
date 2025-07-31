@@ -1,27 +1,36 @@
-const jwt = require('jsonwebtoken')
+const jwt = require('jsonwebtoken');
+const Seller = require('../models/Seller');
+const User = require('../models/User'); 
 
-const isAuth = (req,res,next)=>{
-    try{
-    const accessToken = req.cookie.accessToken;
-    if(!accessToken){
-        const error = new Error('unathorized');
-        error.statusCode = 400;
-        throw error;
+const isAuth = async (req, res, next) => {
+  try {
+    const accessToken = req.cookies.accessToken;
+
+    if (!accessToken) {
+      return res.status(401).json({ message: 'Unauthorized: No token provided' });
     }
-    jwt.verify(accessToken,process.env.ACCESS_TOKEN_KEY,(err,decoded)=>{
-        if(err){
-            return res.status(400).json({message:'invalid token'})
-            }else{
-                req.userId = decoded.id;
-                req.userRole = decoded.role;
-                req.userEmail = decoded.email;
-            }
-            next()
 
-    })
-    console.log(accessToken);
+    const decoded = jwt.verify(accessToken, process.env.ACCESS_TOKEN_KEY);
+
     
-}catch(error){
-    next(error);
-}}
+    let user = await Seller.findById(decoded.id);
+    
+   
+    if (!user) {
+      user = await User.findById(decoded.id);
+    }
+
+    if (!user) {
+      return res.status(401).json({ message: 'User not found' });
+    }
+
+    req.user = user;
+    next();
+  } catch (err) {
+    res.status(401).json({ message: 'Unauthorized', error: err.message });
+  }
+};
+
 module.exports = isAuth;
+
+

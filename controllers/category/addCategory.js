@@ -1,42 +1,41 @@
-const Category = require('../../models/Category')
+const Category = require('../../models/Category');
 
+const addCategory = async (req, res, next) => {
+  try {
+    console.log("REQ.BODY:", req.body);
+    console.log("REQ.FILE:", req.file);
 
+    const title = req.body.title;
+    const image = req.file ? req.file.filename : null;
 
-const addCategory = async(req,res,next)=>{
-    const {title,image} = req.body
+    
+    if (!title || title.trim().length < 2) {
+      return res.status(400).json({ message: "Invalid category name" });
+    }
 
-try{
+    const findedCategory = await Category.findOne({ title: title.trim() });
+    if (findedCategory) {
+      return res.status(400).json({ message: "Category already exists" });
+    }
 
-if(!title || title.trim().length < 2){
-    const error = new Error ('invalid category name')
-    error.status = 400
-    throw error
-}
+    
+    const newCategory = new Category({
+      title: title.trim(),
+      image: image || '',
+    });
 
-    const findedCategory = await Category.findOne({title:title})
-    if(findedCategory){
-        const error = new Error('this category is already exist')
-        error.status = 400
-        throw error
-}
+    const savedCategory = await newCategory.save();
 
-const newCategory = new Category({
-    title:title,
-    image:image
+    return res.status(201).json({
+      message: "Category created successfully",
+      savedCategory,
+      status: true,
+    });
 
-})
-
-const savedCategory = await newCategory.save()
-res.status(201).json({
-    message:'category added successfully',
-    status: true,
-    data:savedCategory
-})
-
-
-}catch (error){
-    next(error);
-
-}}
+  } catch (error) {
+    console.error("Error while adding category:", error);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+};
 
 module.exports = addCategory;

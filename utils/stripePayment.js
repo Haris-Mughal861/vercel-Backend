@@ -11,7 +11,7 @@ const stripePayment = async (number,cvc,exp_month,exp_year,amount)=>{
             card: {
                 number: number,
                 exp_month: exp_month,
-                exp_year: _year,
+                exp_year:exp_year,
                 cvc: cvc
                 },
 
@@ -25,7 +25,8 @@ const stripePayment = async (number,cvc,exp_month,exp_year,amount)=>{
             })
             return paymentIntent
             }catch(error){
-                console.log(error)
+               console.error("Stripe error:", error);
+
 
             }
         };

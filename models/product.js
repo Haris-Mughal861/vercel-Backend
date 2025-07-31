@@ -3,20 +3,23 @@ const mongoose = require('mongoose');
 const productSchema = new mongoose.Schema(
   {
     title: { type: String },
-    sales_price: { type: Number },
+    sale_price: { type: Number },
     purchase_price: { type: Number },
-    details: { type: String },
+    detail: { type: String },
     stock: { type: Number },
     category: { type: mongoose.Types.ObjectId, ref: 'Category' },
     brand: { type: mongoose.Types.ObjectId, ref: 'Brand' },
-    Image: [{ type: String }],
+    image: [{ type: String }],
     is_active: { type: Boolean, default: true },
+    seller: { type: mongoose.Types.ObjectId, ref: 'Seller' },
     review: [{ type: mongoose.Types.ObjectId, ref: 'Review' }],
+     sizes: [{ type: String }],     
+    colors: [{ type: String }],   
   },
   { timestamps: true }
 );
 
-// Avoid OverwriteModelError
+
 const Product = mongoose.models.Product || mongoose.model('Product', productSchema);
 
 module.exports = Product;

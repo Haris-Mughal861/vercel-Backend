@@ -6,7 +6,6 @@ const getAllOrders = async(req,res,next)=>{
 
 
 
-
     try{
         const list = await Order.find().sort({_id: -1}).skip((pageNum-1)*pageLimit).limit(pageLimit);
         res.status(200).json({message: 'success', status: true, list})

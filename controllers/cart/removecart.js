@@ -14,7 +14,9 @@ const removecart = async (req,res,next)=>
          ]);
          if(findedCart.quantity >1){
             findedCart.quantity--
-            findedCart.cartTotal = findedCart.product.sale_price;
+           findedCart.cartTotal = findedCart.product.sale_price * findedCart.quantity;
+await findedCart.save();
+
          }else{
             await Cart.findOneAndDelete({user:req.userId,product: productId});
          }

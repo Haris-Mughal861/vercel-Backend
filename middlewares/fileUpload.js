@@ -1,27 +1,20 @@
 const multer = require('multer');
+const path = require('path');
 
-const fileUpload = () => {
-    const storage = multer.diskStorage({
-        destination: (req, file, cb) => {
-            cb(null, 'images'); 
-        },
-        filename: (req, file, cb) => {
-            const num = Math.floor(Math.random() * 1e9); 
-            cb(null, file.fieldname + file.originalname); 
-        },
-    });
 
-    const upload = multer({ storage: storage }).single('image');
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, 'images'); 
+  },
+  filename: (req, file, cb) => {
+    const ext = path.extname(file.originalname);
+    const uniqueName = `${file.fieldname}-${Date.now()}-${Math.round(Math.random() * 1e9)}${ext}`;
+    cb(null, uniqueName);
+  },
+});
 
-    return (req, res, next) => {
-        upload(req, res, (err) => {
-            if (err) {
-                return res.status(500).send({ error: "File upload failed!" });
-            }
-            next(); 
-        });
-    };
-};
 
-module.exports = fileUpload;
+module.exports = multer({ storage: storage });
+
+
 

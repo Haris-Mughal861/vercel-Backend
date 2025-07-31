@@ -1,5 +1,5 @@
 const Review = require('../../models/Review');
-const Product = require('../../models/product')
+const Product = require('../../models/Product')
 
 const addReview = async(req,res,next)=>{
     const productId = req.query.productId
