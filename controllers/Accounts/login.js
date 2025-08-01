@@ -5,7 +5,7 @@ const bcrypt = require('bcrypt');
 const generateToken = require('../../utils/generateToken');
 
 const login = async (req, res, next) => {
-  const adminEmail = "xyz123@gmail.com";
+  const adminEmail = "xyz123@gmail.com"; 
 
   try {
     const { email, password } = req.body;
