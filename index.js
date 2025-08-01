@@ -9,7 +9,7 @@ const fs = require('fs');
 const getConnection = require('./utils/getConnection');
 
 
-const errorHandler = require('./middlewares/errorhandler');
+const errorHandler = require('./middlewares/errorHandler.js');
 
 
 const accountRoutes = require('./routes/account');
