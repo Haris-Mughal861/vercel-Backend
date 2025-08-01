@@ -8,8 +8,8 @@ const fs = require('fs');
 
 const getConnection = require('./utils/getConnection');
 
-
-const errorHandler = require('./middlewares/errorHandler.js');
+ 
+const errorHandler = require('./middlewares/errorhandler.js');
 
 
 const accountRoutes = require('./routes/account');
