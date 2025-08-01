@@ -16,8 +16,8 @@ const addReview = async(req,res,next)=>{
         const savesReview = await newReview.save();
         await Product.findByIdAndUpdate(productId,{$push:{review:savedReview._id}})
         res.status(200).json({message:"Review Added Successfully", status:true})
-    }catch(error){
+    }catch(error){  
         next(error)
-    }
+    }   
 }
 module.exports = addReview;
