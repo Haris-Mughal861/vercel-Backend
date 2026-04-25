@@ -42,6 +42,10 @@ app.use(cors({
 }));
 app.use(express.json());
 
+app.get('/', (req, res) => {
+  res.send("Ecommerce Backend API is running...");
+});
+
 app.get('/abc',(req,res)=>{
   res.send("hello")
 })
