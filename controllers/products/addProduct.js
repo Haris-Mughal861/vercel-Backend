@@ -2,6 +2,7 @@ const Product = require("../../models/Product");
 const joi = require("joi");
 const Category = require("../../models/Category");
 const Brand = require("../../models/Brand");
+const cloudinary = require("../../utils/cloudinary");
 
 const addProduct = async (req, res, next) => {
   try {
@@ -36,19 +37,27 @@ const addProduct = async (req, res, next) => {
       throw error;
     }
 
-    const image = req.files?.map((file) => file.filename);
-    if (!image || image.length === 0) {
+    if (!req.files || req.files.length === 0) {
       const error = new Error("Image is required");
       error.statusCode = 400;
       throw error;
     }
 
-    //const existingProduct = await Product.findOne({ title });
-    //if (existingProduct) {
-    //  const error = new Error("This product name already exists");
-     // error.statusCode = 400;
-     // throw error;
-   // }
+    // Upload to Cloudinary
+    const uploadPromises = req.files.map((file) => {
+      return new Promise((resolve, reject) => {
+        const uploadStream = cloudinary.uploader.upload_stream(
+          { folder: 'products' },
+          (error, result) => {
+            if (error) reject(error);
+            else resolve(result.secure_url);
+          }
+        );
+        uploadStream.end(file.buffer);
+      });
+    });
+
+    const imageUrls = await Promise.all(uploadPromises);
 
     const foundBrand = await Brand.findOne({ title: brand }).select("_id");
     const foundCategory = await Category.findOne({ title: category }).select("_id");
@@ -59,10 +68,8 @@ const addProduct = async (req, res, next) => {
       throw error;
     }
 
-    
     const parsedSizes = sizes ? sizes.split(",").map((s) => s.trim()) : [];
 
-    
     let parsedColors = [];
     if (colors && typeof colors === "string") {
       parsedColors = colors.split(",").map((c) => c.trim());
@@ -76,7 +83,7 @@ const addProduct = async (req, res, next) => {
       stock,
       brand: foundBrand._id,
       category: foundCategory._id,
-      image,
+      image: imageUrls,
       seller: req.user?._id || null,
       sizes: parsedSizes,
       colors: parsedColors,

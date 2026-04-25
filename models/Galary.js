@@ -6,4 +6,4 @@ const galarySchema = new mongoose.Schema({
 
 },{timestamps:true});
 
-module.exports = mongoose.model("Galary",galarySchema);
+module.exports = mongoose.model("Galary",galarySchema); 

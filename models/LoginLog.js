@@ -10,4 +10,4 @@ const loginLogSchema = new mongoose.Schema({
   }
 });
 
-module.exports = mongoose.model('LoginLog', loginLogSchema);
+module.exports = mongoose.model('LoginLog', loginLogSchema); 

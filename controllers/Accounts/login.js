@@ -5,7 +5,7 @@ const bcrypt = require('bcrypt');
 const generateToken = require('../../utils/generateToken');
 
 const login = async (req, res, next) => {
-  const adminEmail = "xyz123@gmail.com"; 
+  const adminEmail = "harisdevteampro56@gmail.com";
 
   try {
     const { email, password } = req.body;
@@ -40,9 +40,9 @@ const login = async (req, res, next) => {
       let foundUser = await User.findOne({ email: formattedEmail });
       const foundSeller = await Seller.findOne({ email: formattedEmail });
 
-      
+
       if (foundUser) {
-        foundUser = await User.findById(foundUser._id); 
+        foundUser = await User.findById(foundUser._id);
         console.log(" Attempting login for USER");
         console.log("Entered password:", password);
         console.log("Stored hashed password:", foundUser.password);
@@ -85,7 +85,7 @@ const login = async (req, res, next) => {
       timestamp: new Date()
     });
 
-    
+
 
     res.status(200).json({
       status: true,
@@ -98,7 +98,7 @@ const login = async (req, res, next) => {
     });
 
   } catch (error) {
-    
+
     next(error);
   }
 };

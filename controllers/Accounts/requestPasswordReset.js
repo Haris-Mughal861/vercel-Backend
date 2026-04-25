@@ -15,7 +15,11 @@ const requestPasswordReset = async (req, res, next) => {
     user.codeExpiry = Date.now() + 10 * 60 * 1000; 
     await user.save();
 
-    await sendMail(email, `Your password reset code: ${resetCode}`, 'Password Reset Code');
+    await sendMail({
+      to: email,
+      subject: 'Password Reset Code',
+      text: `Your password reset code is: ${resetCode}`
+    });
 
     res.status(200).json({ status: true, message: "Reset code sent to your email" });
   } catch (err) {

@@ -15,7 +15,11 @@ const requestVerificationCode = async (req, res, next) => {
 
     await VerificationCode.create({ email, code });
 
-    await sendEmailCode(email, code);
+    await sendEmailCode({
+      to: email,
+      subject: "Seller Verification Code",
+      text: `Your seller verification code is: ${code}`
+    });
 
     res.status(200).json({ message: "Verification code sent to email", status: true });
   } catch (error) {
