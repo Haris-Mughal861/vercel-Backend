@@ -43,6 +43,19 @@ const addProduct = async (req, res, next) => {
       throw error;
     }
 
+    const hasCloudinaryConfig =
+      process.env.CLOUDINARY_CLOUD_NAME &&
+      process.env.CLOUDINARY_API_KEY &&
+      process.env.CLOUDINARY_API_SECRET;
+
+    if (!hasCloudinaryConfig) {
+      const error = new Error(
+        "Cloudinary configuration missing. Please set CLOUDINARY_CLOUD_NAME, CLOUDINARY_API_KEY, and CLOUDINARY_API_SECRET."
+      );
+      error.statusCode = 500;
+      throw error;
+    }
+
     // Upload to Cloudinary
     const uploadPromises = req.files.map((file) => {
       return new Promise((resolve, reject) => {
@@ -106,6 +119,11 @@ const addProduct = async (req, res, next) => {
       status: true,
     });
   } catch (error) {
+    if (error?.message?.includes("Must supply api_key")) {
+      error.statusCode = 500;
+      error.message =
+        "Cloudinary API key missing on server. Please configure CLOUDINARY_API_KEY in deployment environment variables.";
+    }
     console.error("Add Product Error:", error.message);
     next(error);
   }
