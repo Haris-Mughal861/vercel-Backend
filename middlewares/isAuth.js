@@ -4,7 +4,11 @@ const User = require('../models/User');
 
 const isAuth = async (req, res, next) => {
   try {
-    const accessToken = req.cookies.accessToken;
+    const authHeader = req.headers.authorization || "";
+    const bearerToken = authHeader.startsWith("Bearer ")
+      ? authHeader.slice(7).trim()
+      : authHeader.trim();
+    const accessToken = req.cookies.accessToken || bearerToken;
 
     if (!accessToken) {
       return res.status(401).json({ message: 'Unauthorized: No token provided' });
