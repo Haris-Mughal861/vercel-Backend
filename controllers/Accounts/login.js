@@ -91,6 +91,7 @@ const login = async (req, res, next) => {
       status: true,
       message: 'Login successful',
       accessToken,
+      token: accessToken,
       user: {
         userId: user._id,
         role,
